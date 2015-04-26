@@ -10,17 +10,8 @@ $host_config_filename = $path_to_apache_conf . $host_name . '.conf';
 $enable_host_cmd = 'sudo a2ensite ';
 $reload_server_cmd = 'sudo service apache2 reload';
 
-if (isset($_POST['ip'])) {
-    echo $_POST['ip'];
-    $root_pwd = $_POST['root'];
-    $ip = $_POST['ip'];
-    $_POST['ip'] = $_POST['root'] = null;
-    echo "check your new host: <a href=\"http://$host_name\">$host_name</a>";
-} 
+if (!isset($_POST['ip'])) {
 
-else
-
-{
     echo '<script>
     var ip = prompt("Please enter an ip address for new virtual host: (default: 127.0.0.127) ");
     var root = prompt("Please enter admin password to add config to \\n ' . $path_to_apache_conf . ' \\n and to ' . $path_to_hosts_conf . '");
@@ -35,8 +26,10 @@ else
     element1.value=root;
     form.appendChild(element); form.appendChild(element1); form.submit();
     </script>';
-    die();
+
 }
+
+else {
 
 $template = <<<T
 <VirtualHost *:80>
@@ -91,3 +84,12 @@ unlink('file.tmp');
 file_put_contents("$document_root/index.html", "<h1>Apache virtual host <b>$host_name</b> with document root <b>$document_root</b> was set up successfully!</h1>");
 exec("echo $root_pwd | sudo -S a2ensite $host_name.conf");
 exec("echo $root_pwd | sudo -S service apache2 reload");
+
+    echo $_POST['ip'];
+    $root_pwd = $_POST['root'];
+    $ip = $_POST['ip'];
+    $_POST['ip'] = $_POST['root'] = null;
+    echo "check your new host: <a href=\"http://$host_name\">$host_name</a>";
+}
+
+
