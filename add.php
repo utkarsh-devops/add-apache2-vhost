@@ -31,8 +31,9 @@ if (isset($_POST['ip'])) {
     element1.value=root;
     form.appendChild(element); form.appendChild(element1); form.submit();
     </script>';
+}
 
-    $template = <<<T
+$template = <<<T
 <VirtualHost *:80>
         # The ServerName directive sets the request scheme, hostname and port that
         # the server uses to identify itself. This is used when creating
@@ -70,20 +71,18 @@ php_value error_log /var/log/apache2/%host_name%_error.log
 </VirtualHost>
 T;
 
-    $parsed_template = str_replace(['%document_root%', '%host_name%'], [$document_root, $host_name], $template);
+$parsed_template = str_replace(['%document_root%', '%host_name%'], [$document_root, $host_name], $template);
 
-    file_put_contents('tmp.tmp', $parsed_template);
-    exec("echo $root_pwd | sudo -S touch $host_config_filename ");
-    exec("echo $root_pwd | sudo -S cp tmp.tmp $host_config_filename");
-    unlink('tmp.tmp');
+file_put_contents('tmp.tmp', $parsed_template);
+exec("echo $root_pwd | sudo -S touch $host_config_filename ");
+exec("echo $root_pwd | sudo -S cp tmp.tmp $host_config_filename");
+unlink('tmp.tmp');
 
-    echo exec("echo $root_pwd| sudo -S -u root cat $path_to_hosts_conf > file.tmp");
-    echo exec("echo $ip '\t' $host_name >> file.tmp");
-    echo exec("echo $root_pwd| sudo -S -u root cp file.tmp  $path_to_hosts_conf");
-    unlink('file.tmp');
+echo exec("echo $root_pwd| sudo -S -u root cat $path_to_hosts_conf > file.tmp");
+echo exec("echo $ip '\t' $host_name >> file.tmp");
+echo exec("echo $root_pwd| sudo -S -u root cp file.tmp  $path_to_hosts_conf");
+unlink('file.tmp');
 
-    file_put_contents("$document_root/index.html", "<h1>Apache virtual host <b>$host_name</b> with document root <b>$document_root</b> was set up successfully!</h1>");
-    exec("echo $root_pwd | sudo -S a2ensite $host_name.conf");
-    exec("echo $root_pwd | sudo -S service apache2 reload");
-
-}
+file_put_contents("$document_root/index.html", "<h1>Apache virtual host <b>$host_name</b> with document root <b>$document_root</b> was set up successfully!</h1>");
+exec("echo $root_pwd | sudo -S a2ensite $host_name.conf");
+exec("echo $root_pwd | sudo -S service apache2 reload");
