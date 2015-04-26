@@ -3,7 +3,7 @@
 $document_root = getcwd();
 $local_host_postfix = '.loc';
 $host_name = basename(__DIR__) . $local_host_postfix;
-$host_ip = '127.0.0.100';
+$ip = '127.0.0.100';
 $path_to_apache_conf = '/etc/apache2/sites-available/';
 $path_to_hosts_conf = '/etc/hosts';
 $host_config_filename = $path_to_apache_conf . $host_name . '.conf';
@@ -16,7 +16,11 @@ if (isset($_POST['ip'])) {
     $ip = $_POST['ip'];
     $_POST['ip'] = $_POST['root'] = null;
     echo "check your new host: <a href=\"http://$host_name\">$host_name</a>";
-} else {
+} 
+
+else
+
+{
     echo '<script>
     var ip = prompt("Please enter an ip address for new virtual host: (default: 127.0.0.127) ");
     var root = prompt("Please enter admin password to add config to \\n ' . $path_to_apache_conf . ' \\n and to ' . $path_to_hosts_conf . '");
@@ -31,6 +35,7 @@ if (isset($_POST['ip'])) {
     element1.value=root;
     form.appendChild(element); form.appendChild(element1); form.submit();
     </script>';
+    die();
 }
 
 $template = <<<T
