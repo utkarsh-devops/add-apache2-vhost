@@ -10,3 +10,8 @@ Short and easy to use PHP script that automatically creates Apache2 virtual host
 Script will ask you to input only two things: **ip address** for your host and **root password** to edit necessary config files.  
 That's it!  
 Any feedback would appreciated!
+
+
+tested in Chrome 41.0 , Opera 12.16 on Linuxmint 17.1 xfce, kde  
+
+there is known issue with Firefox browser - currently beign resolved
