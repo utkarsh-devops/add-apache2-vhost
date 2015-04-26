@@ -1,2 +1,5 @@
 # add-apache2-vhost
-PHP script that automatically creates Apache2 virtual host for Linux
+Short and easy to use PHP script that automatically creates Apache2 virtual host for Linux  
+
+**Usage:**
+
